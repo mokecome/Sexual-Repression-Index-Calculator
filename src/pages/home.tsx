@@ -3,7 +3,7 @@
  * 提供评估介绍、快速开始入口和功能说明
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -28,9 +28,17 @@ import {
 } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { LanguageSwitcher } from '@/components/common';
+import { CaptchaDialog } from '@/components/common/captcha-dialog';
 
 export default function Home() {
   const { t } = useTranslation();
+  const [captchaOpen, setCaptchaOpen] = useState(false);
+  const [selectedType, setSelectedType] = useState<'quick' | 'full'>('quick');
+
+  const handleStartAssessment = (type: 'quick' | 'full') => {
+    setSelectedType(type);
+    setCaptchaOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-psychology-calm via-white to-psychology-warm">
@@ -170,20 +178,25 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-                <Link to="/assessment?type=quick">
-                  <Button size="lg" className="bg-psychology-primary hover:bg-psychology-primary/90 text-white px-8 py-4 text-lg">
-                    <Zap className="w-5 h-5 mr-2" />
-                    {t('home.startQuick')}
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
-                </Link>
+                <Button
+                  size="lg"
+                  className="bg-psychology-primary hover:bg-psychology-primary/90 text-white px-8 py-4 text-lg"
+                  onClick={() => handleStartAssessment('quick')}
+                >
+                  <Zap className="w-5 h-5 mr-2" />
+                  {t('home.startQuick')}
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
 
-                <Link to="/assessment?type=full">
-                  <Button size="lg" variant="outline" className="border-psychology-primary text-psychology-primary hover:bg-psychology-primary hover:text-white transition-colors px-8 py-4 text-lg">
-                    <Target className="w-5 h-5 mr-2" />
-                    {t('home.startFull')}
-                  </Button>
-                </Link>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-psychology-primary text-psychology-primary hover:bg-psychology-primary hover:text-white transition-colors px-8 py-4 text-lg"
+                  onClick={() => handleStartAssessment('full')}
+                >
+                  <Target className="w-5 h-5 mr-2" />
+                  {t('home.startFull')}
+                </Button>
               </div>
 
               {/* 核心指标展示 */}
@@ -272,12 +285,13 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <Link to="/assessment?type=quick" className="block">
-                    <Button className="w-full bg-psychology-primary hover:bg-psychology-primary/90 text-white">
-                      {t('home.startQuick')}
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  </Link>
+                  <Button
+                    className="w-full bg-psychology-primary hover:bg-psychology-primary/90 text-white"
+                    onClick={() => handleStartAssessment('quick')}
+                  >
+                    {t('home.startQuick')}
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
                 </CardContent>
               </Card>
 
@@ -325,12 +339,14 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <Link to="/assessment?type=full" className="block">
-                    <Button variant="outline" className="w-full border-psychology-secondary text-psychology-secondary hover:bg-psychology-secondary hover:text-white transition-colors">
-                      {t('home.startFull')}
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  </Link>
+                  <Button
+                    variant="outline"
+                    className="w-full border-psychology-secondary text-psychology-secondary hover:bg-psychology-secondary hover:text-white transition-colors"
+                    onClick={() => handleStartAssessment('full')}
+                  >
+                    {t('home.startFull')}
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
                 </CardContent>
               </Card>
             </div>
@@ -423,12 +439,14 @@ export default function Home() {
                 {t('home.ctaDesc')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/assessment?type=quick">
-                  <Button size="lg" className="bg-psychology-primary hover:bg-psychology-primary/90 text-white px-8 py-4">
-                    <Zap className="w-5 h-5 mr-2" />
-                    {t('home.startNow')}
-                  </Button>
-                </Link>
+                <Button
+                  size="lg"
+                  className="bg-psychology-primary hover:bg-psychology-primary/90 text-white px-8 py-4"
+                  onClick={() => handleStartAssessment('quick')}
+                >
+                  <Zap className="w-5 h-5 mr-2" />
+                  {t('home.startNow')}
+                </Button>
                 <Button size="lg" variant="outline" asChild className="border-psychology-primary text-psychology-primary hover:bg-psychology-primary hover:text-white transition-colors px-8 py-4">
                   <Link to="/guide">
                     <BookOpen className="w-5 h-5 mr-2" />
@@ -457,8 +475,22 @@ export default function Home() {
               <div>
                 <h4 className="font-semibold mb-3">{t('home.assessmentTools')}</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li><Link to="/assessment?type=quick" className="hover:text-psychology-primary transition-colors">{t('common.quickAssessment')}</Link></li>
-                  <li><Link to="/assessment?type=full" className="hover:text-psychology-primary transition-colors">{t('common.fullAssessment')}</Link></li>
+                  <li>
+                    <button
+                      onClick={() => handleStartAssessment('quick')}
+                      className="hover:text-psychology-primary transition-colors"
+                    >
+                      {t('common.quickAssessment')}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => handleStartAssessment('full')}
+                      className="hover:text-psychology-primary transition-colors"
+                    >
+                      {t('common.fullAssessment')}
+                    </button>
+                  </li>
                   <li><Link to="/history" className="hover:text-psychology-primary transition-colors">{t('nav.history')}</Link></li>
                 </ul>
               </div>
@@ -488,6 +520,13 @@ export default function Home() {
           </div>
         </footer>
       </div>
+
+      {/* 验证码对话框 */}
+      <CaptchaDialog
+        open={captchaOpen}
+        onOpenChange={setCaptchaOpen}
+        assessmentType={selectedType}
+      />
     </div>
   );
 }
