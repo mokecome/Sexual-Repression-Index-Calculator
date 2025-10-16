@@ -101,5 +101,16 @@
     "sexualActivityDesc": "Please select your sexual experience status",
     "religiousCultural": "Religious/Cultural Background",
     "religiousCulturalDesc": "Please select your religious or cultural background (optional)"
+  },
+  "captcha": {
+    "title": "Security Verification",
+    "description": "Please complete the following verification to prevent abuse",
+    "verifying": "Verifying...",
+    "privacy": "We value your privacy, verification information will not be stored",
+    "language": "en",
+    "inputLabel": "Please enter verification code",
+    "inputPlaceholder": "Enter verification code",
+    "verify": "Verify",
+    "error": "Verification code is incorrect, please try again"
   }
 }

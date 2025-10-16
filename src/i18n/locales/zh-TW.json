@@ -101,5 +101,16 @@
     "sexualActivityDesc": "請選擇您的性經驗狀況",
     "religiousCultural": "宗教/文化背景",
     "religiousCulturalDesc": "請選擇您的宗教或文化背景(可選)"
+  },
+  "captcha": {
+    "title": "安全驗證",
+    "description": "為了防止濫用，請完成以下驗證",
+    "verifying": "正在驗證...",
+    "privacy": "我們重視您的隱私，驗證資訊不會被儲存",
+    "language": "zh-TW",
+    "inputLabel": "請輸入驗證碼",
+    "inputPlaceholder": "輸入驗證碼",
+    "verify": "驗證",
+    "error": "驗證碼錯誤，請重試"
   }
 }
